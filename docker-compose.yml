@@ -9,7 +9,7 @@ services:
     volumes:
       - ./app:/var/www/app
     networks:
-      - baseSymfony_net
+      - base-symfony-api
     depends_on:
       - db
 
@@ -26,7 +26,7 @@ services:
       - .docker/database/dump:/sql
       - .docker/database/data:/var/lib/mysql
     networks:
-      - baseSymfony_net
+      - base-symfony-api
 
   nginx:
     build:
@@ -39,9 +39,9 @@ services:
     ports:
       - '8002:80'
     networks:
-      - baseSymfony_net
+      - base-symfony-api
     depends_on:
       - app
 
 networks:
-  baseSymfony_net:
+  base-symfony-api:
