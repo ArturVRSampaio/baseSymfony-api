@@ -2,10 +2,14 @@ version: '3.5'
 
 services:
   app:
+    container_name: baseSymfony_app
     build:
-      context: .docker/php
+      context: .
+      dockerfile: dev.dockerfile
+    env_file:
+      - ./app/.env
     environment:
-      - DATABASE_URL=mysql://${DB_USER}:${DB_PASSWORD}@db:3306/${DB_NAME}?serverVersion=5.7
+      - TZ=America/Sao_Paulo
     volumes:
       - ./app:/var/www/app
     networks:
@@ -15,13 +19,8 @@ services:
 
   db:
     image: mysql:8.0
-    environment:
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}  
-    ports:
-      - "4002:3306"
+    env_file:
+      - ./app/.env
     volumes:
       - .docker/database/dump:/sql
       - .docker/database/data:/var/lib/mysql
