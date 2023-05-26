@@ -1,5 +1,4 @@
-FROM php:8.0.2-fpm-alpine3.13
-
+FROM php:8.2-fpm-alpine3.18
 RUN apk --update --no-cache add git
 RUN docker-php-ext-install pdo_mysql
 
