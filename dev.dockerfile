@@ -1,6 +1,10 @@
 FROM php:8.2-fpm-alpine3.18
-RUN apk --update --no-cache add git
-RUN docker-php-ext-install pdo_mysql
+
+RUN apk --update --no-cache add git $PHPIZE_DEPS icu-dev
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+install-php-extensions intl pdo_mysql
 
 RUN apk update
 RUN apk upgrade
