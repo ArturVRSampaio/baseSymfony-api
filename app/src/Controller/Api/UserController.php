@@ -13,20 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/users')]
 class UserController extends ApiController
 {
-    private UserService $userService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository,
+                                private readonly UserService    $userService)
     {
-        $this->userService = new UserService($userRepository);
     }
 
-    #[Route('/', name: 'app_user', methods: ['GET'])]
-    public function index(): Response
-    {
-        return $this->respondWithSuccess();
-    }
-
-    #[Route('/', name: 'new_user', methods: ['POST'])]
+    #[Route('/new', methods: ['POST'])]
     public function create(Request $request): Response
     {
         $data = json_decode($request->getContent());
@@ -36,5 +29,11 @@ class UserController extends ApiController
         $this->userService->createUser($userInputDto);
 
         return new JsonResponse([], 201, 'usuário criado com sucesso');
+    }
+
+        #[Route('/all', methods: ['GET'])]
+    public function getall(): Response
+    {
+        return  $this->respondWithSuccess($this->userRepository->findAll());
     }
 }

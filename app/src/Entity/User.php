@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSerializable
 {
     use TimestampableEntity, SoftDeletableEntity;
 
@@ -100,12 +100,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function hydrateFromDto(UserInputDto $dto): self
+    public function jsonSerialize(): mixed
     {
-        $this->setUsername($dto->getUsername());
-        $this->setRoles($dto->getRoles());
-        $this->setPassword($dto->getPassword());
-
-        return $this;
+        return [
+            'Id' => $this->getId(),
+            'Username' => $this->getUsername(),
+            'Roles' => $this->getRoles()
+        ];
     }
 }

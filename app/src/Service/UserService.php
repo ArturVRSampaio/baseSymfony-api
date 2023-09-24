@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\Dto\User\UserInputDto;
 
-class UserService
+readonly class UserService
 {
 
     public function __construct(
@@ -18,7 +18,9 @@ class UserService
     {
         try {
             $user = new User();
-            $user->hydrateFromDto($userInputDto);
+            $user->setUsername($userInputDto->getUsername());
+            $user->setRoles($userInputDto->getRoles());
+            $user->setPassword($userInputDto->getPassword());
 
             $this->userRepository->add($user, true);
         } catch (\Exception $exception) {
