@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine3.18
+FROM php:fpm-alpine3.20
 
 RUN apk --update --no-cache add git $PHPIZE_DEPS icu-dev
 

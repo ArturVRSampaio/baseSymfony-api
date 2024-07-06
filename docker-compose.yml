@@ -1,11 +1,9 @@
-version: '3.5'
-
 services:
   app:
     container_name: baseSymfony_app
     build:
       context: .
-      dockerfile: dev.dockerfile
+      dockerfile: .docker/.dockerfile
     env_file:
       - ./app/.env
     environment:

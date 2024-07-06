@@ -1,4 +1,4 @@
-FROM nginx:1.19.6-alpine
+FROM nginx
 WORKDIR /var/www
 CMD ["nginx"]
 EXPOSE 80
